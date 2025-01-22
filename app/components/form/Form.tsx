@@ -30,6 +30,7 @@ export const sendEmail = (formData: FormData) => {
     )
     .then((response) => {
       console.log("Email sent successfully:", response);
+      toast.success('Email Sent Successfully!');
     })
     .catch((error) => {
       console.error("Error sending email:", error);
@@ -94,7 +95,6 @@ function Form() {
     setErrors(newErrors);
     if (!newErrors.fullName && !newErrors.email && !newErrors.message) {
       sendEmail(formData);
-      toast.success('Email Sent Successfully!');
     }
   };
 
