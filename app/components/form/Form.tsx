@@ -94,7 +94,7 @@ function Form() {
     setErrors(newErrors);
     if (!newErrors.fullName && !newErrors.email && !newErrors.message) {
       sendEmail(formData);
-      toast.success('Email Sent Successfully');
+      toast.success('Email Sent Successfully!');
     }
   };
 
