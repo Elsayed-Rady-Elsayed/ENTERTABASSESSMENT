@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import emailjs from "emailjs-com";
+import i18next from "i18next";
 
 type FormData = {
   fullName: string;
@@ -12,15 +13,20 @@ type Errors = {
   message: string;
 };
 
-
 export const sendEmail = (formData: FormData) => {
-  emailjs.send("service_h1rucpg", "template_u7odrdv", {
-    to_email: formData.email,
-    to_name: formData.fullName,
-    from_name: "Entertab",
-    message: formData.message,
-    reply_to: formData.email,
-  }, "QnZR0Tpt9Rw3rl_sw")
+  emailjs
+    .send(
+      "service_h1rucpg",
+      "template_u7odrdv",
+      {
+        to_email: formData.email,
+        to_name: formData.fullName,
+        from_name: "Entertab",
+        message: formData.message,
+        reply_to: formData.email,
+      },
+      "QnZR0Tpt9Rw3rl_sw"
+    )
     .then((response) => {
       console.log("Email sent successfully:", response);
     })
@@ -41,12 +47,28 @@ function Form() {
     message: "",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const [dir, setDir] = useState(i18next.language === "ar" ? "rtl" : "ltr");
+
+  useEffect(() => {
+    const handleLanguageChange = (lng: string) => {
+      setDir(lng === "ar" ? "rtl" : "ltr");
+    };
+    i18next.on("languageChanged", handleLanguageChange);
+    return () => {
+      i18next.off("languageChanged", handleLanguageChange);
+    };
+  }, []);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value });
   };
 
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleBlur = (
+    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { id } = e.target;
     if (!formData[id as keyof FormData]) {
       setErrors((prevErrors) => ({
@@ -76,56 +98,78 @@ function Form() {
 
   return (
     <div className="container m-auto my-[4rem] flex justify-center">
-      <form className="flex items-center justify-center flex-col md:w-3/5 w-4/5 gap-3" onSubmit={handleSubmit}>
+      <form
+        className="flex items-center justify-center flex-col md:w-3/5 w-4/5 gap-3"
+        onSubmit={handleSubmit}
+        dir={dir}
+      >
         <div className="flex gap-5 w-full md:flex-row flex-col *:flex *:flex-col *:gap-2">
           <div className="md:w-1/2 w-full">
             <label htmlFor="fullName" className="text-xs capitalize text-black">
-              Full Name *
+              {i18next.t("fullName")} *
             </label>
             <input
               type="text"
-              className={`border text-black rounded-md p-2 text-sm bg-gray-100/50 ${errors.fullName ? "border-red-600" : "border-gray-300"}`}
+              className={`border text-black rounded-md p-2 text-sm bg-gray-100/50 ${
+                errors.fullName ? "border-red-600" : "border-gray-300"
+              }`}
               id="fullName"
-              placeholder="Full Name"
+              placeholder={i18next.t("fullName")}
               value={formData.fullName}
               onChange={handleChange}
               onBlur={handleBlur}
             />
-            {errors.fullName && <small className="text-red-600 text-[10px]">{errors.fullName}</small>}
+            {errors.fullName && (
+              <small className="text-red-600 text-[10px]">
+                {errors.fullName}
+              </small>
+            )}
           </div>
           <div className="md:w-1/2 w-full">
             <label htmlFor="email" className="text-xs capitalize text-black">
-              Email *
+              {i18next.t("email")} *
             </label>
             <input
               type="email"
-              className={`border rounded-md p-2 text-sm bg-gray-100/50 ${errors.email ? "border-red-600" : "border-gray-300"}`}
+              className={`border rounded-md p-2 text-sm bg-gray-100/50 ${
+                errors.email ? "border-red-600" : "border-gray-300"
+              }`}
               id="email"
-              placeholder="Email"
+              placeholder={i18next.t("email")}
               value={formData.email}
               onChange={handleChange}
               onBlur={handleBlur}
             />
-            {errors.email && <small className="text-red-600 text-[10px]">{errors.email}</small>}
+            {errors.email && (
+              <small className="text-red-600 text-[10px]">
+                {errors.email}
+              </small>
+            )}
           </div>
         </div>
         <div className="flex flex-col w-full">
           <label htmlFor="message" className="text-xs capitalize text-black">
-            Message *
+            {i18next.t("message")} *
           </label>
           <textarea
             rows={10}
-            className={`border text-black p-1 rounded-md bg-gray-100/50 ${errors.message ? "border-red-600" : "border-gray-300"}`}
+            className={`border text-black p-1 rounded-md bg-gray-100/50 ${
+              errors.message ? "border-red-600" : "border-gray-300"
+            }`}
             name="message"
             id="message"
             value={formData.message}
             onChange={handleChange}
             onBlur={handleBlur}
           />
-          {errors.message && <small className="text-red-600 text-[10px]">{errors.message}</small>}
+          {errors.message && (
+            <small className="text-red-600 text-[10px]">
+              {errors.message}
+            </small>
+          )}
         </div>
         <button className="bg-[#3fe3b9] hover:bg-[#3fe3d8] w-full md:w-1/2 p-2 rounded-xl mt-5 hover:-translate-y-0.5 hover:border-black transition-transform">
-          Submit
+          {i18next.t("submit")}
         </button>
       </form>
     </div>

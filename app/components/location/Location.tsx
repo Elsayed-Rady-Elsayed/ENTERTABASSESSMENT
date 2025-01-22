@@ -1,3 +1,4 @@
+import i18next from "i18next";
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { FaWhatsapp  } from "react-icons/fa";
 import { IoMdMail } from "react-icons/io";
@@ -11,7 +12,7 @@ function Location(){
                 <li ><BsFillTelephoneFill /> +1 (202) 770-0575</li>
                 <li ><IoMdMail /><a className="text-[#3fe3b9] underline" href="mailto:info@entertab.net">info@entertab.net</a></li>
             </ul>
-            <p className="text-sm text-gray-400 md:w-1/2">Give us a call or drop by anytime, we endeavour to answer all enquiries within 24 hours on business days.</p>
+            <p className="text-sm text-gray-400 md:w-1/2">{i18next.t("aboutAddress")}</p>
         </div>
     )
 }
