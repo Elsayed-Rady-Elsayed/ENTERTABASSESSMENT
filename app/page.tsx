@@ -6,6 +6,7 @@ import Header from "./components/header/Header";
 import Map from "./components/map/Map";
 import Location from "./components/location/Location";
 import i18next from "i18next";
+import { Toaster } from "react-hot-toast";
 i18next.init({
   lng: "en",
   debug: true,
@@ -45,6 +46,7 @@ export default function Home() {
 
   return (
     <div className="overflow-hidden">
+      <div><Toaster/></div>
       <Header/>
       <Map/>
       <Location/>

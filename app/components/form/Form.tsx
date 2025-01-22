@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import emailjs from "emailjs-com";
 import i18next from "i18next";
+import toast from "react-hot-toast";
 
 type FormData = {
   fullName: string;
@@ -93,6 +94,7 @@ function Form() {
     setErrors(newErrors);
     if (!newErrors.fullName && !newErrors.email && !newErrors.message) {
       sendEmail(formData);
+      toast.success('Email Sent Successfully');
     }
   };
 
