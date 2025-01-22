@@ -24,7 +24,7 @@ function Header(){
                     <Nav />
                 </div>
                 <Link href={"#"} className="md:w-1/4 w-full" >
-                    <Image src={"https://www.entertab.net/img/logo-light.png"} alt="company logo" width={200} height={200}/>
+                    <Image src={"https://www.entertab.net/img/logo-dark.png"} alt="company logo" width={200} height={200}/>
                 </Link>
                 <div className={`hidden md:flex w-2/4 ${i18next.language=="en"?"justify-end":"justify-start"} items-center gap-5`}>
                     <Link href={""} className="text-black/80 text-xs font-semibold border p-2 rounded-lg hover:-translate-y-0.5 hover:border-black transition-transform">{i18next.t("buildWebsite")}</Link>
