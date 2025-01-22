@@ -2,7 +2,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-First, run the development server:
+to download and run the project in the your localhost:
 
 ```
 git clone https://github.com/Elsayed-Rady-Elsayed/ENTERTABASSESSMENT.git
